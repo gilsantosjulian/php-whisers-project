@@ -10,10 +10,10 @@ include('./layout.php');
       <input class="form-control mb-3" placeholder="Please write the input" type="text" name="user" id="user">
       <button type="submit" class="btn btn-primary">Go</button>
     </div>
-    <br>
-    <p><em>Still don't have a wish list?!</em></p>
-    <a href="createNewWisher.php"><button class="btn btn-primary">Create one now!</button></a>
   </form>
+  <br>
+  <p><em>Still don't have a wish list?!</em></p>
+  <a href="createNewWisher.php"><button class="btn btn-primary">Create one now!</button></a>
 </body>
 
 </html>
