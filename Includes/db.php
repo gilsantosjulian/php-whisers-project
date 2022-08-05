@@ -6,8 +6,8 @@ class WishDB extends mysqli
     private static $instance = null;
 
     // db connection config vars
-    private $user = "phpuser";
-    private $pass = "phpuserpw";
+    private $user = "root";
+    private $pass = "";
     private $dbName = "wishlist";
     private $dbHost = "localhost";
 
