@@ -1,6 +1,6 @@
 <?php
 // Import bootstrap scripts and styles
-include('./layout.php');
+include('Includes/layout.php');
 
 ?>
 
@@ -20,7 +20,6 @@ include('./layout.php');
             <th>Due Date</th>
         </tr>
         <?php
-        require_once("Includes/db.php");
         $wisherID = WishDB::getInstance()->get_wisher_id_by_name($_SESSION["user"]);
         $result = WishDB::getInstance()->get_wishes_by_wisher_id($wisherID);
         while ($row = mysqli_fetch_array($result)) :

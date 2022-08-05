@@ -1,6 +1,6 @@
 <?php
 // Import bootstrap scripts and styles
-include('./layout.php');
+include('Includes/layout.php');
 ?>
 
 <body class="container p-5">
@@ -25,7 +25,6 @@ include('./layout.php');
   </form>
 </body>
 <?php
-require_once("Includes/db.php");
 $logonSuccess = false;
 
 // verify user's credentials

@@ -1,9 +1,6 @@
 <?php
 // Import bootstrap scripts and styles
-include('./layout.php');
-
-// Include config file
-require_once("./Includes/db.php");
+include('Includes/layout.php');
 ?>
 
 <body class="container p-5">

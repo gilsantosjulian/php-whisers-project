@@ -1,8 +1,6 @@
 <?php
 // Import bootstrap scripts and styles
-include('./layout.php');
-
-require_once("Includes/db.php");
+include('Includes/layout.php');
 
 session_start();
 if (!array_key_exists("user", $_SESSION)) {
