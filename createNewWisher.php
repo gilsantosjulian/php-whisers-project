@@ -3,7 +3,7 @@
 include('./layout.php');
 
 // Include config file
-require_once "./config.php";
+require_once("Includes/db.php");
 
 /** other variables */
 $userNameIsUnique = true;
@@ -20,11 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     /** Check whether a user whose name matches the "user" field already exists */
-    mysqli_select_db($connection, "wishlist");
-    $user = mysqli_real_escape_string($connection, $_POST['user']);
-    $wisher = mysqli_query($connection, "SELECT id FROM wishers WHERE name='".$user."'");
-    $wisherIDnum=mysqli_num_rows($wisher);
-    if ($wisherIDnum) {
+    $wisherID = WishDB::getInstance()->get_wisher_id_by_name($_POST["user"]);
+
+    if ($wisherID) {
         $userNameIsUnique = false;
     }
 
@@ -44,11 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
      * After adding the new entry, close the connection and redirect the application to editWishList.php.
      */
     if (!$userIsEmpty && $userNameIsUnique && !$passwordIsEmpty && !$password2IsEmpty && $passwordIsValid) {
-        $password = mysqli_real_escape_string($connection, $_POST['password']);
-        mysqli_select_db($connection, "wishlist");
-        mysqli_query($connection, "INSERT wishers (name, password) VALUES ('" . $user . "', '" . $password . "')");
-        mysqli_free_result($wisher);
-        mysqli_close($connection);
+
+        WishDB::getInstance()->create_wisher($_POST["user"], $_POST["password"]);
+
+        session_start();
+        $_SESSION['user'] = $_POST['user'];
+        
         header('Location: editWishList.php');
         exit;
     }
@@ -56,42 +55,45 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 ?>
 
 <html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <title></title>
-    </head>
-    <body>Welcome!<br>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title></title>
+</head>
+
+<body>Welcome!<br>
     <form action="createNewWisher.php" method="POST">
-        Your name: <input type="text" name="user"/><br/>
+        Your name: <input type="text" name="user" /><br />
         <?php
-            if ($userIsEmpty) {
-                echo ("Enter your name, please!");
-                echo ("<br/>");
-            }
-            if (!$userNameIsUnique) {
-                echo ("The person already exists. Please check the spelling and try again");
-                echo ("<br/>");
-            }
+        if ($userIsEmpty) {
+            echo ("Enter your name, please!");
+            echo ("<br/>");
+        }
+        if (!$userNameIsUnique) {
+            echo ("The person already exists. Please check the spelling and try again");
+            echo ("<br/>");
+        }
         ?>
-        Password: <input type="password" name="password"/><br/>
+        Password: <input type="password" name="password" /><br />
         <?php
-            if ($passwordIsEmpty) {
+        if ($passwordIsEmpty) {
             echo ("Enter the password, please!");
             echo ("<br/>");
-            }
+        }
         ?>
-        Please confirm your password: <input type="password" name="password2"/><br/>
+        Please confirm your password: <input type="password" name="password2" /><br />
         <?php
-            if ($password2IsEmpty) {
-                echo ("Confirm your password, please");
-                echo ("<br/>");
-            }
-           if (!$password2IsEmpty && !$passwordIsValid) {
-                echo  ("The passwords do not match!");
-                echo ("<br/>");
-            }
+        if ($password2IsEmpty) {
+            echo ("Confirm your password, please");
+            echo ("<br/>");
+        }
+        if (!$password2IsEmpty && !$passwordIsValid) {
+            echo ("The passwords do not match!");
+            echo ("<br/>");
+        }
         ?>
-        <input type="submit" value="Register"/>
+        <input type="submit" value="Register" />
     </form>
-    </body>
+</body>
+
 </html>
