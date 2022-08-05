@@ -2,6 +2,8 @@
 // Import bootstrap scripts and styles
 include('Includes/layout.php');
 
+//Here MT test
+
 session_start();
 if (!array_key_exists("user", $_SESSION)) {
     header('Location: index.php');
