@@ -1,6 +1,6 @@
 <?php
 // Import bootstrap scripts and styles
-include('Includes/layout.php');
+include('includes/layout.php');
 
 ?>
 
