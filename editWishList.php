@@ -4,52 +4,66 @@ include('includes/layout.php');
 
 ?>
 
-<body>
-    <h1>
-        <?php session_start();
-        if (array_key_exists("user", $_SESSION)) {
-            echo "Hello " . $_SESSION['user'];
-        } else {
-            header('Location: index.php');
-            exit;
-        } ?>
-    </h1>
-    <table border="black">
-        <tr>
-            <th>Item</th>
-            <th>Due Date</th>
-        </tr>
-        <?php
-        $wisherID = WishDB::getInstance()->get_wisher_id_by_name($_SESSION["user"]);
-        $result = WishDB::getInstance()->get_wishes_by_wisher_id($wisherID);
-        while ($row = mysqli_fetch_array($result)) :
-            echo "<tr><td>" . htmlentities($row['description']) . "</td>";
-            echo "<td>" . htmlentities($row['due_date']) . "</td>";
-            $wishID = $row["id"];
-        ?>
-            <td>
-                <form name="editWish" action="editWish.php" method="GET">
-                    <input type="hidden" name="wishID" value="<?php echo $wishID; ?>" />
-                    <input type="submit" name="editWish" value="Edit" />
-                </form>
-            </td>
-            <td>
-                <form name="deleteWish" action="deleteWish.php" method="POST">
-                    <input type="hidden" name="wishID" value="<?php echo $wishID; ?>" />
-                    <input type="submit" name="deleteWish" value="Delete" />
-                </form>
-            </td>
-        <?php
-            echo "</tr>\n";
-        endwhile;
-        mysqli_free_result($result);
-        ?>
-    </table>
-    <form name="addNewWish" action="editWish.php">
-        <input type="submit" value="Add Wish">
-    </form>
+<body class="container p-5">
 
-    <form name="backToMainPage" action="index.php"><input type="submit" value="Back To Main Page" /></form>
-</body>
+  <h2 class="text-secondary mb-3">Database Driven Application With PHP</h2>
+
+  <div class="edit_wish_content-top">
+    <h4 class="mb-4">
+      <?php session_start();
+      if (array_key_exists("user", $_SESSION)) {
+        echo "<span class='label label-default text-info'>Hello " . $_SESSION['user'] . "</span>";
+      } else {
+        header('Location: index.php');
+        exit;
+      } ?>
+    </h4>
+    <form name="addNewWish" action="editWish.php">
+      <button type="submit" class="btn btn-primary">Add Wish</button>
+    </form>
+  </div>
+
+  <table class="table table-striped">
+    <tr>
+      <th class="text-info" scope="col">#</th>
+      <th class="text-info" scope="col">Item</th>
+      <th class="text-info" scope="col">Due Date</th>
+      <th class="text-info">Actions</th>
+    </tr>
+
+    <?php
+    $wisherID = WishDB::getInstance()->get_wisher_id_by_name($_SESSION["user"]);
+    $result = WishDB::getInstance()->get_wishes_by_wisher_id($wisherID);
+
+    while ($row = mysqli_fetch_array($result)) :
+      echo "<tr>" .
+        "<th>" . htmlentities($row["id"]) . "</th>" .
+        "<td>" . htmlentities($row["description"]) . "</td>" .
+        "<td>" . htmlentities($row["due_date"]) . "</td>";
+      $wishID = $row["id"];
+    ?>
+
+      <td class="actions-box">
+        <form name="editWish" action="editWish.php" method="GET">
+          <input type="hidden" name="wishID" value="<?php echo $wishID; ?>" />
+          <button type="submit" class="btn btn-info">Edit</button>
+        </form>
+        <form name="deleteWish" action="deleteWish.php" method="POST">
+          <input type="hidden" name="wishID" value="<?php echo $wishID; ?>" />
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </td>
+
+    <?php
+      echo "</tr>\n";
+    endwhile;
+    mysqli_free_result($result);
+    ?>
+
+  </table>
+
+  <a href="index.php" class="btn btn-link"><< Back to the main page</a>
+
+  </body>
 
 </html>
