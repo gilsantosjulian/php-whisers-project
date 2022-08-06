@@ -46,7 +46,7 @@
   justify-content: space-between;
 }
 
-td {
+td, th {
   margin: auto;
   vertical-align: middle !important;
 }
