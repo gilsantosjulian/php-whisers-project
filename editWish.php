@@ -19,13 +19,19 @@ else
 <body class="container p-5">
 
   <h2 class="text-secondary mb-3">Database Driven Application With PHP</h2>
+  <h4 class="mb-4"><span class="label label-default text-info">My wish</span></h4>
   
-  <form name="editWish" action="editWish.php" method="POST">
-    Describe your wish: <input type="text" name="wish" value="<?php echo $wish['description']; ?>" /><br />
-    When do you want to get it? <input type="text" name="dueDate" value="<?php echo $wish['due_date']; ?>" /><br />
-    <input type="hidden" name="wishID" value="<?php echo  $wish["id"]; ?>" />
-    <input type="submit" name="saveWish" value="Save Changes" />
-    <input type="submit" name="back" value="Back to the List" />
+  <form class="mb-3 w-50" name="editWish" action="editWish.php" method="POST">
+    <div class="mb-3">
+      <label class="form-label text-secondary">Describe your wish: </label><br />
+      <input class="form-control" type="text" name="wish" value="<?php echo $wish['description']; ?>" /><br />
+      <label class="form-label text-secondary">When do you want to get it?: </label><br />
+      <input class="form-control" type="text" name="dueDate" value="<?php echo $wish['due_date']; ?>" /><br />
+      <input type="hidden" name="wishID" value="<?php echo  $wish["id"]; ?>" />
+      <input class="btn btn-primary" type="submit" name="saveWish" value="Save Changes" /><br />
+      <a href='index.php' class='btn btn-link'>
+      << Back</a>
+      </div>
   </form>
   <?php
   $wisherID = WishDB::getInstance()->get_wisher_id_by_name($_SESSION['user']);

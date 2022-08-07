@@ -9,8 +9,11 @@ include('includes/layout.php');
   <h4 class="mb-4"><span class="label label-default text-secondary">Wish List of <?php echo htmlentities($_GET["user"]); ?></span></h4>
 
   <?php
+  /* This is a function that is getting the wisher ID from the database. */
   $wisherID = WishDB::getInstance()->get_wisher_id_by_name($_GET["user"]);
 
+  /* This is a conditional statement that checks if the user is not found in the database. If the user
+  is not found, it will display an error message and a link to go back to the index page. */
   if (!$wisherID) {
     echo "
       <div class='alert alert-danger' role='alert'>
@@ -21,7 +24,8 @@ include('includes/layout.php');
     exit();
   }
   ?>
-
+  
+  <!-- Making a table -->
   <table class="table table-striped">
     <tr>
       <th class="text-info" scope="col">#</th>
@@ -29,6 +33,8 @@ include('includes/layout.php');
       <th class="text-info" scope="col">Due Date</th>
     </tr>
     <?php
+    /* This is a while loop that is fetching the results from the database and displaying them in a
+    table. */
     $result = WishDB::getInstance()->get_wishes_by_wisher_id($wisherID);
     while ($row = mysqli_fetch_array($result)) {
       echo "<tr>" .

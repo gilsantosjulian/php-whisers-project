@@ -62,10 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   <h2 class="text-secondary mb-3">Database Driven Application With PHP</h2>
   <h4 class="mb-4"><span class="label label-default text-info">Welcome!</span></h4>
 
+  <!-- Registration form -->
   <form class="mb-3 w-50" name="logon" action="createNewWisher.php" method="POST">
     <div class="mb-3">
       <label for="user" class="form-label text-secondary">Your name:</label>
       <input class="form-control" placeholder="Write the name" type="text" name="user" id="user">
+      <!-- Username has to be filled out and cannot be a duplicate -->
       <?php
       if ($userIsEmpty) {
         echo "
@@ -82,6 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       ?>
     </div>
 
+    <!-- Password cannot be empty -->
     <div class="mb-3">
       <label for="user" class="form-label text-secondary">Password:</label>
       <input class="form-control" placeholder="Write the password" type="password" name="password" id="password">
@@ -95,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       ?>
     </div>
 
+    <!-- Password confirmation needs to be filled and match previous password input -->
     <div class="mb-3">
       <label for="user" class="form-label text-secondary">Please confirm your password:</label>
       <input class="form-control" placeholder="Please confirm the password" type="password" name="password2" id="password2">
@@ -105,6 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
           Confirm your password, please.
         </div>";
       }
+      /* This is checking if the password is empty and if the password is valid. If it is not empty and
+      not valid, then it will display the error message. */
       if (!$password2IsEmpty && !$passwordIsValid) {
         echo "
         <div class='invalid-feedback' style='display: block;'>
