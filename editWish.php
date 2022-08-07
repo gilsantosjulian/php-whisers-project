@@ -24,9 +24,9 @@ else
   <form class="mb-3 w-50" name="editWish" action="editWish.php" method="POST">
     <div class="mb-3">
       <label class="form-label text-secondary">Describe your wish: </label><br />
-      <input class="form-control" type="text" name="wish" value="<?php echo $wish['description']; ?>" /><br />
+      <input class="form-control" type="text" name="wish" placeholder="My wish is.." value="<?php echo $wish['description']; ?>" /><br />
       <label class="form-label text-secondary">When do you want to get it?: </label><br />
-      <input class="form-control" type="text" name="dueDate" value="<?php echo $wish['due_date']; ?>" /><br />
+      <input class="form-control" type="text" name="dueDate" placeholder="YYYY-MM-DD" value="<?php echo $wish['due_date']; ?>" /><br />
       <input type="hidden" name="wishID" value="<?php echo  $wish["id"]; ?>" />
       <input class="btn btn-primary" type="submit" name="saveWish" value="Save Changes" /><br />
       <a href='index.php' class='btn btn-link'>
